@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "theone3-nginx.fullname" . }}
+  labels:
+{{ include "theone3-nginx.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "theone3-nginx.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
